@@ -11,14 +11,14 @@ import java.util.Optional;
 @Service
 public class ProductService {
 
-    List<Product> products= new ArrayList<>(Arrays.asList(
-            new Product(101,"iPhone",500),
-            new Product(102,"iPad",600),
-            new Product(103,"Cannon",1300)
+    List<Product> products = new ArrayList<>(Arrays.asList(
+            new Product(101, "iPhone", 500),
+            new Product(102, "iPad", 600),
+            new Product(103, "Cannon", 1300)
     ));
 
-    public List<Product> getProducts(){
-        Product p=new Product(101,"iPhone",500);
+    public List<Product> getProducts() {
+        Product p = new Product(101, "iPhone", 500);
 
 
         return products;
@@ -26,15 +26,28 @@ public class ProductService {
 
     public Product getProductById(int prodId) {
         return products.stream()
-                .filter(product -> product.getProdId()==prodId)
-                .findFirst().orElse(new Product(-1,null,-1));
+                .filter(product -> product.getProdId() == prodId)
+                .findFirst().orElse(new Product(-1, null, -1));
     }
 
     public void addProduct(Product product) {
         products.add(product);
     }
 
-    public void updateProduct(Product product){
-        Optional
+
+    public void updateProduct(Product product) {
+        int index = -1;
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getProdId() == product.getProdId()) {
+                index = i;
+            }
+        }
+        if (index != -1) {
+            products.set(index, product);
+        }
+    }
+
+    public void deleteProduct(Integer prodid) {
+        products.removeIf((Product prod) -> prod.getProdId() == prodid);
     }
 }
